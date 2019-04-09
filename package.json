@@ -1,0 +1,13 @@
+{
+  "name": "formula_student",
+  "version": "0.0.1",
+  "description": "Car Stats Dashboard",
+  "main": "server.js",
+  "author": "Hugo",
+  "dependencies": {
+    "csv-parse": "^4.3.4",
+    "express": "latest",
+    "mysql": "latest",
+    "noise": "0.0.0"
+  }
+}

@@ -1,0 +1,203 @@
+:root {
+    /* Backgrounds */
+    --main-bg-color: #FCFCFC; 
+    --secondary-bg-color: #F4F4F4; 
+    --tertiary-bg-color:#031127;
+    
+    /* Highlights */
+    --highlight-color: #35C4A3;
+    
+    /* Fonts */
+    --main-font-color: #031127;
+    --secondary-font-color: #FCFCFC;
+    --font-main-family: 'Avenir Next';
+}
+
+body {
+    margin: 0px;
+}
+
+/* HEADER CONTENT */
+
+.header {
+    width: 100%;
+    box-shadow: 0px 3px 6px rgba(0,0,0,.16);
+
+    display: flex;
+    flex-direction: row;
+    padding: 5px 20px;
+}
+
+.header-main {
+    height: 216px;
+    color: var(--highlight-color);
+    justify-content: center;
+}
+
+h1 {
+    font-family: var(--font-main-family);
+    font-size: 20pt;
+    font-style: italic;
+    font-weight: 1200;
+}
+
+.header-sub {
+    height: 50px;
+    background-color: var(--tertiary-bg-color);
+    color: var(--secondary-font-color);
+}
+
+h2 {
+    font-family: var(--font-main-family);
+    font-size: 14pt;
+    font-style: italic;
+}
+
+p { 
+    font-family: var(--font-main-family);
+    font-size: 14pt;
+    font-style: italic;
+}
+
+/* STAT ELEMENTS */ 
+
+.stat {
+    display: flex; 
+    flex-direction: row;
+    margin: 10px 10px;
+}
+
+.stat * {
+    margin-left: 10px;
+    margin-top: 0px;
+}
+
+.stat-floating {
+    background-color: var(--main-bg-color);
+    height: 50px;
+    border-radius: 20px;
+
+    padding: 5px 10px;
+
+    box-shadow: 0px 3px 6px rgba(0,0,0,.16);
+
+    align-items: center;
+}
+
+.stat-floating *{
+    margin-bottom: 0;
+}
+
+.stat-indicator {
+    width: 40px;
+    height: 40px;
+    background-color: var(--highlight-color);
+    border-radius: 20px;
+
+    margin-left: 0px;
+}
+
+/* POSITIONAL CONTAINERS */
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    height: 80%;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.centre-img{
+    position: relative;
+    top:0px;
+    right: 0px;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.centre-box {
+    width: 90%;
+    height: 90%;
+
+    position: absolute;
+    top:0px;
+    left: 0px;
+    padding: 20px;
+}
+
+.align-tl {
+    position: absolute;
+    top:0px;
+    left: 0px;
+}
+
+.align-tr {
+    position: absolute;
+    top:0px;
+    right: 0px;
+}
+
+.align-bl {
+    position: absolute;
+    bottom:0px;
+    left: 0px;
+}
+
+.align-br {
+    position: absolute;
+    bottom:0px;
+    right: 0px;
+}
+
+/* DATA CONTAINERS */ 
+
+.data-container {
+    width: 100%;
+}
+
+.data-frame {
+    background-color: var(--secondary-bg-color);
+    width: 40%;
+}
+
+/* CAR MODEL */
+
+#car-stats {
+    /* position: absolute; */
+    margin: 30px;
+}
+
+#car-stats-wrapper {
+    position: absolute;
+    height: 550px;
+    max-width: 40%;
+}
+
+#car-stats img {
+    max-width: 90%;
+}
+
+/* GRAPH */
+#graph {
+    margin: 30px;
+    background-color: var(--secondary-bg-color);
+    padding: 20px;
+    width: 100%;
+    height: 550px;
+}
+
+
+/* MAP */
+#map {
+    height: 225px;
+    margin: 30px;
+}

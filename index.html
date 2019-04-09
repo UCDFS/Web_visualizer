@@ -1,0 +1,137 @@
+<html>
+    <head>
+        <link rel='stylesheet' type="text/css" href='main.css'>
+    </head>
+    <body>
+        <!-- Page Header -->
+        <div class='header header-main'>
+            <img src="FS-logo.png", width="560">
+        </div>
+        <!-- Banner Data -->
+        <div class='header header-sub'>
+            <div class='stat'>
+               <h2>TOP SPEED</h2>
+               <p>85</p>
+            </div>
+            <div class='stat'>
+                <h2>ACCELERATION</h2>
+                <p>8</p>
+            </div>
+        </div> 
+        <!-- Main Body Data -->
+        <div class='data-container flex-row'>
+            <div id='car-stats' class='data-frame'>
+                <div id='car-stats-wrapper'>
+                    <div class='centre-img'>
+                            <img src="car.png">
+                    </div>
+                    <div class='centre-box'>
+                        <div class='stat stat-floating align-tl'>
+                            <div class='stat-indicator'> </div>
+                            <h2>TEMP</h2>
+                            <p id='value-temp' >70C</p>
+                        </div>
+                        <div class='stat stat-floating align-tr'>
+                            <div class='stat-indicator'> </div>
+                            <h2>VOLTAGE</h2>
+                            <p id='value-voltage'>580V</p>
+                        </div>
+                        <div class='stat stat-floating align-bl'>
+                            <div class='stat-indicator'> </div>
+                            <h2>POS</h2>
+                            <p id='value-position'>N53.2734 E-7.77832031</p>
+                        </div>
+                        <div class='stat stat-floating align-br'>
+                            <div class='stat-indicator'> </div>
+                            <h2>SPEED</h2>
+                            <p id='value-speed'>76KPH</p>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            <div class='flex-col'>
+                
+                <canvas id="graph" width='500px' height='355px;'></canvas>
+                <!-- <div id='map' class='data-frame'>
+
+                </div> -->
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <script>
+
+            // 4 Car stats
+            var current_stats = {
+                speed: document.getElementById('value-speed'),
+                temp: document.getElementById('value-temp'),
+                voltage: document.getElementById('value-voltage'),
+                position: document.getElementById('value-position')
+            }
+
+
+            // Setups up the graph
+            var ctx = document.getElementById('graph').getContext('2d');
+            var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'line',
+
+                // The data for our dataset
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Vehicle Speed (Live)',
+                        borderColor: '#35C4A3',
+                        data: []
+                    }]
+                },
+
+                // Configuration options go here
+                options: {
+                    responsive: true
+                }
+            });
+
+            // Fetches initial data from the backend
+            fetch('./speed')
+            .then((res) => res.json())
+            .then((body) => {
+                addData(chart, body.labels, body.data);
+
+                // Update speed latest
+                current_stats.speed.innerHTML = body.data[body.data.length-1] + 'KPH';
+            })
+
+            // Gets data from the backend at intervals of 1000ms
+            setInterval(() => {
+                fetch('./speed_latest')
+                .then((res) => res.json())
+                .then((body) => {
+                    if(body.labels.length > 0) {
+                        addData(chart, body.labels, body.data);
+                        
+                        // Update speed latest
+                        current_stats.speed.innerHTML = body.data[body.data.length-1] + 'KPH';
+                    }
+                })
+            }, 1000);
+
+            // Function for adding data to the chart
+            function addData(chart, label, data) {
+		chart.data.labels.push(...label);
+		if (chart.data.labels.length > 20){
+			chart.data.labels.shift();
+		}
+                chart.data.datasets.forEach((dataset) => {
+                    dataset.data.push(...data);
+		    if (dataset.data.length > 20){
+			dataset.data.shift();
+		    }
+		console.log(dataset.data.toString());
+                });
+                chart.update();
+            }
+        </script>
+    </body>
+</html>
