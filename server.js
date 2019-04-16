@@ -5,6 +5,8 @@ const app = express();
 const path = require('path');
 const fs = require('fs');
 const csv = require('csv-parse');
+const datetime = require('node-datetime');
+
 // SQL Setup
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
@@ -42,30 +44,23 @@ var last_state = {time:0, speed:0};
 var csvdata = [];
 var parser = csv();
 
-function gps_data(Index, UTC, relPosN, relPosE, CoG){
-	this.index = Index;
-	this.utc = UTC;
-	this.north = relPosN;
-	this.east = relPosE;
-	this.cog = CoG;
-}
-
 fs.createReadStream('data.csv')  
-  .pipe(csv())
-  .on('data', (row) => {
-    csvdata.push(row);
-  })
-  .on('end', () => {
-    console.log('CSV file successfully processed');
-    console.log("csvdata length = " + csvdata.length);
-    console.log(csvdata[1][1]);
-  });
+	.pipe(csv())
+  	.on('data', (row) => {
+    		csvdata.push(row);
+  	})
+  	.on('end', () => {
+    		console.log('CSV file successfully processed');
+    		console.log("csvdata length = " + csvdata.length);
+ 		var test = datetime.create(csvdata[1][1]);
+		console.log(test); 
+  	});
 
 //Init
 speeds_queued.times.push(1);
 speeds_queued.speeds.push(60);
 speed_delta = 0;
-
+var dt = datetime.create();
 
 // Returns any initial data for the graph as desired
 app.get('/speed', (req, res) => {
@@ -80,11 +75,20 @@ app.get('/speed_latest', (req,res)=> {
         res.send({"labels":[last_state.time],"data":[last_state.speed]});
 
         // Fake generation of more data
-        if (last_state.time > 10){
-		speeds_queued.times.push(1)
-	} else{
+	if (last_state.time <= csvdata.length){
 		speeds_queued.times.push(last_state.time + 1);	
+	} else{
+		speeds_queued.times.push(1);
 	}
+
+	if (speeds_queued.times < 1){
+		speeds_queued.speeds.push(0);
+	} else{
+		var currentrow = csvdata[speeds_queued.times[speeds_queued.times.length-1]];
+		var pastrow = csvdata[speeds_queued.times[speeds_queued.times.length-2]];
+
+	}
+
 	if (last_state.speed < 30) {
 		speed_delta = 2}
 	 if (last_state.speed > 60) {
