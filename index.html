@@ -102,20 +102,23 @@
                 // Update speed latest
                 current_stats.speed.innerHTML = body.data[body.data.length-1] + 'KPH';
             })
+	
+	    
+	    
 
-            // Gets data from the backend at intervals of 1000ms
-            setInterval(() => {
-                fetch('./speed_latest')
-                .then((res) => res.json())
-                .then((body) => {
-                    if(body.labels.length > 0) {
-                        addData(chart, body.labels, body.data);
-                        
-                        // Update speed latest
-                        current_stats.speed.innerHTML = body.data[body.data.length-1] + 'KPH';
-                    }
-                })
-            }, 1000);
+            // // Gets data from the backend at intervals of 1000ms
+            // setInterval(() => {
+            //     fetch('./speed_latest')
+            //     .then((res) => res.json())
+            //     .then((body) => {
+            //         if(body.labels.length > 0) {
+            //             addData(chart, body.labels, body.data);
+            //             
+            //             // Update speed latest
+            //             current_stats.speed.innerHTML = body.data[body.data.length-1] + 'KPH';
+            //         }
+            //     })
+            // }, 1000);
 
             // Function for adding data to the chart
             function addData(chart, label, data) {
