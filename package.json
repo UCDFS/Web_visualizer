@@ -5,7 +5,7 @@
   "main": "server.js",
   "author": "Hugo",
   "dependencies": {
-    "csv-parse": "^4.3.4",
+    "csv-parse": "^4.4.6",
     "express": "latest",
     "mysql": "latest",
     "net": "^1.0.2",
